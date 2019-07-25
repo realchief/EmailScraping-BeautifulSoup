@@ -90,20 +90,20 @@ if __name__ == '__main__':
     filtered_links = [i for i in nodup_link if re.search("http", i)]
     final_links = list(set(filtered_links))
     mails = [crawl(f) for f in final_links]
-    flat_lists = mails
 
     final_emails = []
-    for flat_list in flat_lists:
-        item_list = list(set(flat_list))
-        for item in item_list:
-            if item not in final_emails:
-                final_emails.append(item)
+    for flat_lists in mails:
+        for flat_list in flat_lists:
+            item_list = list(set(flat_list))
+            for item in item_list:
+                if item not in final_emails:
+                    final_emails.append(item)
     print(final_emails)
     data = {}
     data.update({
         'domain': domain,
-        'mails': seen
+        'mails': final_emails
     })
-    with open('data1.json', 'w') as outfile:
+    with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
-    print("--- %s seconds ---" % (time.time() - start_time))
+    # print("--- %s seconds ---" % (time.time() - start_time))

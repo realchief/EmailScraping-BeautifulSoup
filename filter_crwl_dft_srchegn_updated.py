@@ -104,6 +104,7 @@ if __name__ == '__main__':
         'domain': domain,
         'mails': final_emails
     })
+    print(data)
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
     # print("--- %s seconds ---" % (time.time() - start_time))

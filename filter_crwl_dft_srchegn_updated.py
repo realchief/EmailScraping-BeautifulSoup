@@ -85,26 +85,31 @@ if __name__ == '__main__':
         ask1 = link_ask
         link_6.append(ask1)
 
-    links = link_3+link_4+link_5+link_6
+    links = link_3 + link_4 + link_5 + link_6
     nodup_link = list(set(links))
-    print(nodup_link)
-    string = "http"
-    filtered_links = [i for i in nodup_link if re.search(string, i)]
-    final_links = [j for j in filtered_links]
+    filtered_links = [i for i in nodup_link if re.search("http", i)]
+    final_links = list(set(filtered_links))
     mails = [crawl(f) for f in final_links]
-    print(mails)
+    seen = set()
+    flat_lists = []
+    for mail in mails:
+        t = tuple(mail)
+        if t not in seen:
+            flat_lists.append(mail)
+            seen.add(t)
 
-flat = [j for i in mails for j in i]
-seen = []
-for item in flat:
-    if item not in seen:
-        seen.append(item)
-print(seen)
-data = {}
-data.update({
-    'domain': domain,
-    'emails': seen
-})
-with open('data.json', 'w') as outfile:
-    json.dump(data, outfile)
-print("--- %s seconds ---" % (time.time() - start_time))
+    final_emails = []
+    for flat_list in flat_lists:
+        item_list = list(set(flat_list))
+        for item in item_list:
+            if item not in final_emails:
+                final_emails.append(item)
+    print(final_emails)
+    data = {}
+    data.update({
+        'domain': domain,
+        'mails': seen
+    })
+    with open('data1.json', 'w') as outfile:
+        json.dump(data, outfile)
+    print("--- %s seconds ---" % (time.time() - start_time))

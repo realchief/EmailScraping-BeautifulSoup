@@ -90,13 +90,7 @@ if __name__ == '__main__':
     filtered_links = [i for i in nodup_link if re.search("http", i)]
     final_links = list(set(filtered_links))
     mails = [crawl(f) for f in final_links]
-    seen = set()
-    flat_lists = []
-    for mail in mails:
-        t = tuple(mail)
-        if t not in seen:
-            flat_lists.append(mail)
-            seen.add(t)
+    flat_lists = mails
 
     final_emails = []
     for flat_list in flat_lists:
